@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIFF Flex Share</title>
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+    <h2>LIFF Flex Message</h2>
+    <button onclick="sendFlexMessage()">ส่ง Flex Message</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            liff.init({ liffId: "2006965273-DeegjdoX" })
+                .then(() => console.log("LIFF Initialized"))
+                .catch(err => console.error("LIFF Init Failed", err));
+        });
+
+        function sendFlexMessage() {
+            const flexMessage = {
+                type: "flex",
+                altText: "นี่คือ Flex Message",
+                contents: {
+                    type: "bubble",
+                    body: {
+                        type: "box",
+                        layout: "vertical",
+                        contents: [
+                            { type: "text", text: "Hello!", weight: "bold", size: "xl" }
+                        ]
+                    }
+                }
+            };
+
+            if (liff.isInClient()) {
+                liff.sendMessages([flexMessage])
+                    .then(() => alert("Message Sent!"))
+                    .catch(err => console.error("Error sending message", err));
+            } else {
+                alert("Please open this in LINE App.");
+            }
+        }
+    </script>
+</body>
+</html>
